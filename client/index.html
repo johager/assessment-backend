@@ -4,17 +4,55 @@
     <title>Back End Assessment</title>
   </head>
   <body class="container">
-    <button id="complimentButton">Get a compliment</button>
+    <section>
+      <h2>Compliment</h2>
+      <button id="complimentButton">Get a compliment</button>
+      <h2>Fortune</h2>
+      <button id="fortuneButton">Get a fortune</button> <span id="fortuneSpan"></span>
+    </section>
 
+    <section>
+      <h2>First Line Of A Novel, Or An FBI Most Wanted Fugitive</h2>
+      <select id="novelOrFugitive">
+        <option id="none" value="-">- Select An Option -</option>
+        <option id="novel" value="novel">First Line Of A Novel</option>
+        <option id="fugitive" value="fugitive">An FBI Most Wanted Fugitive</option>
+      </select>
+      <button id="getAnotherBtn">Get Another</button>
+      <div id="novelOrFugitiveDiv"></div>
+    </section>
+
+    <section>
+      <h2>RPN Calculator</h2>
+      <p>(This only works for one calculation per load of the page.)</p>
+      <div id="calcDisp">0</div>
+      <button id="enter" class="'calcEnter">Enter</button>
+      <br>
+      <button class="calcOper" value="-">-</button>
+      <button class="calcNum" value="7">7</button>
+      <button class="calcNum" value="8">8</button>
+      <button class="calcNum" value="9">9</button>
+      <br>
+      <button class="calcOper" value="+">+</button>
+      <button class="calcNum" value="4">4</button>
+      <button class="calcNum" value="5">5</button>
+      <button class="calcNum" value="6">6</button>
+      <br>
+      <button class="calcOper" value="*">*</button>
+      <button class="calcNum" value="1">1</button>
+      <button class="calcNum" value="2">2</button>
+      <button class="calcNum" value="3">3</button>
+      <br>
+      <button class="calcOper" value="/">/</button>
+      <button class="calcNum" value="0">0</button>
+      <button class="calcNum" value=".">.</button>
+      <br>
+      <p>You can learn how to use an RPN calculator <a href="https://www.lehigh.edu/~sgb2/rpnTutor.html">here</a>.</p>
+    </section>
+    
+    <h2>RPN Calculator</h2>
+    
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-      document.getElementById("complimentButton").onclick = function () {
-        axios.get("http://localhost:4000/api/compliment/")
-            .then(function (response) {
-              const data = response.data;
-              alert(data);
-            });
-      };
-    </script>
+    <script src="index.js"></script>
   </body>
 </html>
