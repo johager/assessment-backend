@@ -50,7 +50,15 @@
       <p>You can learn how to use an RPN calculator <a href="https://www.lehigh.edu/~sgb2/rpnTutor.html">here</a>.</p>
     </section>
     
-    <h2>RPN Calculator</h2>
+    <h2>Items</h2>
+    <form>
+      <div>Name: <input type="text" name="name"></div>
+      <div>Category: <input type="text" name="category"></div>
+      <button id="makeItem">Make Item</button><br>
+      <button id="updateItem">Update Item</button><br>
+      <button id="deleteItem">Delete Item</button><br>
+    </form>
+    <div id="items"></div>
     
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="index.js"></script>

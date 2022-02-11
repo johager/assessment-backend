@@ -11,6 +11,11 @@ app.get("/api/compliment", ctrl.getCompliment)
 app.get("/api/fortune", ctrl.getFortune)
 app.get("/api/novel", ctrl.getNovel)
 app.get("/api/fugitive", ctrl.getFugitive)
+
 app.post("/api/doCalcOperation", ctrl.doCalcOperation)
+
+app.post("/api/item", ctrl.makeItem)
+app.put("/api/item/:name", ctrl.updateItem)
+app.delete("/api/item/:name", ctrl.deleteItem)
 
 app.listen(4000, () => console.log("Server running on 4000"));
