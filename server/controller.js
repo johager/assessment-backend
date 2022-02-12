@@ -113,6 +113,12 @@ function randomElementFrom(arr) {
     return arr[randomIndex]
 }
 
+function rollDownStack(stack) {
+    stack.y = stack.z
+    stack.z = stack.t
+    stack.t = 0
+}
+
 module.exports = {
     getCompliment: (req, res) => {
         res.status(200).send(randomElementFrom(compliments))
@@ -128,7 +134,8 @@ module.exports = {
     },
     doCalcOperation: (req, res) => {
         let answer = 0
-        const {x, y} = req.body.stack
+        let {stack} = req.body
+        const {x, y} = stack
         switch (req.body.oper) {
             case "+":
                 answer = y + x
@@ -147,7 +154,12 @@ module.exports = {
                 return
         }
 
-        res.status(200).send(String(answer))
+        console.log("doCalcOperation inp:", stack)
+        rollDownStack(stack)
+        stack.x = answer
+        console.log("doCalcOperation out:", stack)
+
+        res.status(200).send(stack)
     },
     makeItem: (req, res) => {
         console.log(req.body)

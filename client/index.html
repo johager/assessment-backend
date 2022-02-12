@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Back End Assessment</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Sans+Pro:400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
   </head>
   <body class="container">
     <section>
@@ -22,28 +24,29 @@
       <div id="novelOrFugitiveDiv"></div>
     </section>
 
-    <section>
+    <section class="calc">
       <h2>RPN Calculator</h2>
-      <p>(This only works for one calculation per load of the page.)</p>
       <div id="calcDisp">0</div>
-      <button id="enter" class="'calcEnter">Enter</button>
+      <button id="enter" class="calcEnter">Enter</button>
+      <button id="calcChS" class="calcFunc">CHS</button>
+      <button id="calcBkSp" class="calcFunc">&larr;</button>
       <br>
-      <button class="calcOper" value="-">-</button>
+      <button class="calcOper" value="-">&minus;</button>
       <button class="calcNum" value="7">7</button>
       <button class="calcNum" value="8">8</button>
       <button class="calcNum" value="9">9</button>
       <br>
-      <button class="calcOper" value="+">+</button>
+      <button class="calcOper" value="+">&plus;</button>
       <button class="calcNum" value="4">4</button>
       <button class="calcNum" value="5">5</button>
       <button class="calcNum" value="6">6</button>
       <br>
-      <button class="calcOper" value="*">*</button>
+      <button class="calcOper" value="*">&times;</button>
       <button class="calcNum" value="1">1</button>
       <button class="calcNum" value="2">2</button>
       <button class="calcNum" value="3">3</button>
       <br>
-      <button class="calcOper" value="/">/</button>
+      <button class="calcOper" value="/">&div;</button>
       <button class="calcNum" value="0">0</button>
       <button class="calcNum" value=".">.</button>
       <br>
