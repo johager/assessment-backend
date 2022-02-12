@@ -20,7 +20,7 @@ h2 {
     font-style: normal;
     font-weight: 600;
     color: #005449;
-    margin: 1.2em 0.0em 0.6em 0.0em;
+    margin: 1.2em 0.0em 0.3em 0.0em;
 }
 
 a {
@@ -33,20 +33,42 @@ a:hover {
     text-decoration: underline;
 }
 
+button {
+	color: #005449;
+	background-color: #BBCBC9;
+	font-size: 1.1em;
+	font-weight: bold;
+	border: 2px solid #005449;
+	border-radius: 8px;
+	padding: 8px 16px;
+	margin: 8px;
+}
+
+select {
+    font-size: 100%;
+}
+
+.fugitive {
+    margin-top: 8px;
+}
+
 .calc button {
     color: white;
     background-color: black;
-    border-radius: 3px;
-    padding: 3px;
-    margin-top: 6px;
+    font-size: 100%;
+    font-weight: normal;
+    border: none;
+    padding: 4px 8px;
+    margin: 6px;
 }
 
 #calcDisp {
     font-family: 'Courier New', monospace;
-    border: solid 1px black;
-    width: 142px;
+    border: 1px solid black;
+    width: 184px;
     padding: 5px 10px;
     margin-bottom: 6px;
+    margin-left: 6px;
 }
 
 .calcEnter {
@@ -54,10 +76,52 @@ a:hover {
 }
 
 .calcFunc {
-    width: 40px;
+    width: 50px;
 }
 
 .calcOper, .calcNum {
-    width: 30px;
-    margin-right: 10px; 
+    width: 40px;
+    margin-right: 12px; 
+}
+
+input {
+    border: 1px solid #005449;
+    padding: 5px;
+}
+
+.right {
+    text-align: right;
+}
+
+.table {
+    position: relative;
+    display: table;
+    border: 1px solid #005449;
+    border-top: 2px solid #005449;
+    border-left: 2px solid #005449;
+}
+
+.table-row {
+    display: table-row;
+}
+  
+.table-cell {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0.5em 0.8em 0.5em 0.8em;
+    border-bottom: 1px solid #005449;
+    border-right: 1px solid #005449;
+}
+
+.table-row-header .table-cell {
+    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #005449;
+    padding: 0.5em 1.0em 0.5em 1.0em;
+    border-bottom: 2px solid #005449;
+}
+
+.table-cell-header {
+    border-right: 2px solid #005449;
 }

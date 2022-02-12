@@ -50,7 +50,7 @@ function displayNovel(novel) {
 }
 
 function displayFugitive(fugitive) {
-    document.getElementById('novelOrFugitiveDiv').innerHTML = `<img src="../server/images/${fugitive.pic}.jpeg" alt="picture of ${fugitive.name}"><p>${fugitive.name}</p>`
+    document.getElementById('novelOrFugitiveDiv').innerHTML = `<p class="fugitive">${fugitive.name}</p><img src="../server/images/${fugitive.pic}.jpeg" alt="picture of ${fugitive.name}">`
     getAnotherBtn.textContent = "Get Another Fugitive"
 }
 
@@ -106,10 +106,14 @@ document.getElementById('enter').onclick = function () {
 }
 
 document.getElementById('calcChS').onclick = function () {
-    if (calcDisp.textContent[0] === '-') {
-        calcDisp.textContent = calcDisp.textContent.slice(1)
-    } else {
-        calcDisp.textContent = '-' + calcDisp.textContent
+    switch (calcDisp.textContent[0]) {
+        case '0':
+            return
+        case '-':
+            calcDisp.textContent = calcDisp.textContent.slice(1)
+            return
+        default:
+            calcDisp.textContent = '-' + calcDisp.textContent
     }
 }
 
@@ -160,16 +164,36 @@ for (let calcNumBtn of document.querySelectorAll('button.calcOper')) {
 // === Items === ===
 //
 
+const updateItemBtn = document.getElementById("updateItem")
+const deleteItemBtn = document.getElementById("deleteItem")
+
+updateItemBtn.style = 'visibility: hidden'
+deleteItemBtn.style = 'visibility: hidden'
+
 function clearItemForm() {
     document.querySelector('input[name="name"]').value = ''
     document.querySelector('input[name="category"]').value = ''
 }
 
 function displayItems(items) {
-    let html = ""
-    for (let item of items) {
-        html += `<p>name: ${item.name}; category: ${item.category}</p>`
+    if (items.length === 0) {
+        updateItemBtn.style = 'visibility: hidden'
+        deleteItemBtn.style = 'visibility: hidden'
+        document.getElementById('items').innerHTML = ''
+        return
     }
+    updateItemBtn.style = 'visibility: visible'
+    deleteItemBtn.style = 'visibility: visible'
+    let html = '<div class="table">'
+    html += '<div class="table-row table-row-header">'
+    html += '<div class="table-cell table-cell-header">Name</div><div  class="table-cell">Category</div>'
+    html += '</div>'
+    for (let item of items) {
+        html += '<div class="table-row">'
+        html += `<div class="table-cell table-cell-header">${item.name}</div><div class="table-cell">${item.category}</div>`
+        html += '</div>'
+    }
+    html += '</div>'
     document.getElementById('items').innerHTML = html
 }
 
@@ -187,7 +211,7 @@ document.getElementById("makeItem").onclick = function (event) {
     })
 }
 
-document.getElementById("updateItem").onclick = function (event) {
+updateItemBtn.onclick = function (event) {
     event.preventDefault()
     const name = document.querySelector('input[name="name"]').value
     const body = {category: document.querySelector('input[name="category"]').value}
@@ -199,7 +223,7 @@ document.getElementById("updateItem").onclick = function (event) {
     })
 }
 
-document.getElementById("deleteItem").onclick = function (event) {
+deleteItemBtn.onclick = function (event) {
     event.preventDefault()
     const name = document.querySelector('input[name="name"]').value
     console.log(name)

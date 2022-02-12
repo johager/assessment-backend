@@ -55,11 +55,16 @@
     
     <h2>Items</h2>
     <form>
-      <div>Name: <input type="text" name="name"></div>
-      <div>Category: <input type="text" name="category"></div>
-      <button id="makeItem">Make Item</button><br>
-      <button id="updateItem">Update Item</button><br>
-      <button id="deleteItem">Delete Item</button><br>
+      <table>
+        <tr>
+          <td class="right">Name:</td><td><input type="text" name="name"></td>
+        </tr><tr>
+          <td class="right">Category:</td><td><input type="text" name="category"></td>
+        </tr>
+      </table>
+      <button id="makeItem">Make Item</button>
+      <button id="updateItem">Update Item</button>
+      <button id="deleteItem">Delete Item</button>
     </form>
     <div id="items"></div>
     
