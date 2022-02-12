@@ -1,14 +1,6 @@
 const getAnotherBtn = document.getElementById('getAnotherBtn')
 const calcDisp = document.getElementById('calcDisp')
 
-// rpn (minimal) stack
-const stack = {
-    x: 0,
-    y: 0,
-    z: 0,
-    t: 0
-}
-
 document.getElementById("complimentButton").onclick = function () {
     axios.get("http://localhost:4000/api/compliment/")
     .then(function (response) {
@@ -77,6 +69,15 @@ document.getElementById("getAnotherBtn").onclick = function () {
 // === RPN calculator === ===
 //
 
+let stack = {
+    x: 0,
+    y: 0,
+    z: 0,
+    t: 0
+}
+
+let stackModeAdd = false
+
 function setStackX(str) {
     stack.x = +str
     calcDisp.textContent = str
@@ -87,45 +88,70 @@ function setCalcDisp(str) {
 }
 
 function pushXOntoStack(num) {
+    console.log("push:", num)
+    console.log("pushXOntoStack inp:", stack)
     stack.t = stack.z
     stack.z = stack.y
     stack.y = stack.x
     stack.x = num
+    console.log("pushXOntoStack out:", stack)
 }
 
 document.getElementById('enter').onclick = function () {
-    console.log('enter:', calcDisp.textContent)
-    stack.y = Number(calcDisp.textContent)
-    console.log('stack.y:', stack.y)
-    setStackX('0')
-    // pushXOntoStack(+calcDisp.textContent)
-    // setCalcDisp(String(stack.x))
+    console.log("enter top:", stack)
+    stackModeAdd = false
+    pushXOntoStack(+calcDisp.textContent)
+    setCalcDisp(String(stack.x))
+    console.log("enter bot:", stack)
+}
+
+document.getElementById('calcChS').onclick = function () {
+    if (calcDisp.textContent[0] === '-') {
+        calcDisp.textContent = calcDisp.textContent.slice(1)
+    } else {
+        calcDisp.textContent = '-' + calcDisp.textContent
+    }
+}
+
+document.getElementById('calcBkSp').onclick = function () {
+    if (stackModeAdd) {
+        calcDisp.textContent = calcDisp.textContent.slice(0, -1)
+    } else {
+        calcDisp.textContent = '0'
+    }
 }
 
 // console.log(document.querySelectorAll('button.calcNum'))
 
 for (let calcNumBtn of document.querySelectorAll('button.calcNum')) {
     calcNumBtn.addEventListener('click', (event) => {
-        console.log("clicked:", calcNumBtn.value)
-        if (calcDisp.textContent === '0') {
-            calcDisp.textContent = ''
+        console.log("clicked:", calcNumBtn.value, "stackModeAdd:", stackModeAdd)
+        if (!stackModeAdd) {
+            pushXOntoStack(Number(calcDisp.textContent))
+            stackModeAdd = true
+            calcDisp.textContent = event.target.value
+        } else {
+            calcDisp.textContent += event.target.value
         }
-        calcDisp.textContent += event.target.value
     })
 }
 
 for (let calcNumBtn of document.querySelectorAll('button.calcOper')) {
     calcNumBtn.addEventListener('click', (event) => {
         stack.x = Number(calcDisp.textContent)
+        console.log("post:", stack)
         const operation = {
             stack,
             oper: event.target.value
         }
         console.log("operation:", operation)
         axios.post("http://localhost:4000/api/doCalcOperation/", operation)
-        .then(function (response) {
-            stack.y = 0
-            setCalcDisp(response.data)
+        .then(function (resp) {
+            console.log("resp.data:", resp.data)
+            stack = resp.data
+            console.log("stack:", stack)
+            setCalcDisp(stack.x)
+            stackModeAdd = false
         })
     })
 }
