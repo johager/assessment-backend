@@ -116,7 +116,6 @@ function randomElementFrom(arr) {
 function rollDownStack(stack) {
     stack.y = stack.z
     stack.z = stack.t
-    stack.t = 0
 }
 
 module.exports = {
@@ -134,7 +133,7 @@ module.exports = {
     },
     doCalcOperation: (req, res) => {
         let answer = 0
-        let {stack} = req.body
+        const {stack} = req.body
         const {x, y} = stack
         switch (req.body.oper) {
             case "+":

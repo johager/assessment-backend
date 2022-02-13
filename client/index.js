@@ -78,6 +78,15 @@ let stack = {
 
 let stackModeAdd = false
 
+function logClick(str) {
+    console.log(`clicked: ${str}, stackModeAdd: ${stackModeAdd}`)
+}
+
+function logStack(str) {
+    const {x, y, z, t} = stack
+    console.log(`x: ${x}  y: ${y}  z: ${z}  t: ${t}  -- ${str}`)
+}
+
 function setStackX(str) {
     stack.x = +str
     calcDisp.textContent = str
@@ -88,36 +97,36 @@ function setCalcDisp(str) {
 }
 
 function pushXOntoStack(num) {
-    console.log("push:", num)
-    console.log("pushXOntoStack inp:", stack)
+    logStack(`pushXOntoStack ${num}`)
     stack.t = stack.z
     stack.z = stack.y
     stack.y = stack.x
     stack.x = num
-    console.log("pushXOntoStack out:", stack)
+    logStack(`pushXOntoStack at end`)
 }
 
 document.getElementById('enter').onclick = function () {
-    console.log("enter top:", stack)
     stackModeAdd = false
+    logClick('enter')
     pushXOntoStack(+calcDisp.textContent)
     setCalcDisp(String(stack.x))
-    console.log("enter bot:", stack)
+    logStack('enter')
 }
 
 document.getElementById('calcChS').onclick = function () {
-    switch (calcDisp.textContent[0]) {
-        case '0':
-            return
-        case '-':
-            calcDisp.textContent = calcDisp.textContent.slice(1)
-            return
-        default:
-            calcDisp.textContent = '-' + calcDisp.textContent
+    logClick('Chs')
+    if (+calcDisp.textContent === 0) {
+        return
+    }
+    if (calcDisp.textContent[0] === '-') {
+        calcDisp.textContent = calcDisp.textContent.slice(1)
+    } else {
+        calcDisp.textContent = '-' + calcDisp.textContent
     }
 }
 
 document.getElementById('calcBkSp').onclick = function () {
+    logClick('BkSp')
     if (stackModeAdd) {
         calcDisp.textContent = calcDisp.textContent.slice(0, -1)
     } else {
@@ -129,9 +138,9 @@ document.getElementById('calcBkSp').onclick = function () {
 
 for (let calcNumBtn of document.querySelectorAll('button.calcNum')) {
     calcNumBtn.addEventListener('click', (event) => {
-        console.log("clicked:", calcNumBtn.value, "stackModeAdd:", stackModeAdd)
+        logClick(calcNumBtn.value)
         if (!stackModeAdd) {
-            pushXOntoStack(Number(calcDisp.textContent))
+            //pushXOntoStack(Number(calcDisp.textContent))
             stackModeAdd = true
             calcDisp.textContent = event.target.value
         } else {
@@ -142,18 +151,21 @@ for (let calcNumBtn of document.querySelectorAll('button.calcNum')) {
 
 for (let calcNumBtn of document.querySelectorAll('button.calcOper')) {
     calcNumBtn.addEventListener('click', (event) => {
-        stack.x = Number(calcDisp.textContent)
-        console.log("post:", stack)
+        //stack.x = Number(calcDisp.textContent)
+        if (stackModeAdd) {
+            pushXOntoStack(+calcDisp.textContent)
+        }
+        const op = event.target.value
+        logClick(op)
+        logStack(`pre op ${op}`)
         const operation = {
             stack,
             oper: event.target.value
         }
-        console.log("operation:", operation)
         axios.post("http://localhost:4000/api/doCalcOperation/", operation)
         .then(function (resp) {
-            console.log("resp.data:", resp.data)
             stack = resp.data
-            console.log("stack:", stack)
+            logStack(`post op ${op}`)
             setCalcDisp(stack.x)
             stackModeAdd = false
         })
@@ -167,19 +179,20 @@ for (let calcNumBtn of document.querySelectorAll('button.calcOper')) {
 const updateItemBtn = document.getElementById("updateItem")
 const deleteItemBtn = document.getElementById("deleteItem")
 
-updateItemBtn.style = 'visibility: hidden'
-deleteItemBtn.style = 'visibility: hidden'
-
 function clearItemForm() {
     document.querySelector('input[name="name"]').value = ''
     document.querySelector('input[name="category"]').value = ''
 }
 
+function displayNoItems() {
+    updateItemBtn.style = 'visibility: hidden'
+    deleteItemBtn.style = 'visibility: hidden'
+    document.getElementById('items').innerHTML = '<p class="noItems">There are no items.</p>'
+}
+
 function displayItems(items) {
     if (items.length === 0) {
-        updateItemBtn.style = 'visibility: hidden'
-        deleteItemBtn.style = 'visibility: hidden'
-        document.getElementById('items').innerHTML = ''
+        displayNoItems()
         return
     }
     updateItemBtn.style = 'visibility: visible'
@@ -214,6 +227,12 @@ document.getElementById("makeItem").onclick = function (event) {
 updateItemBtn.onclick = function (event) {
     event.preventDefault()
     const name = document.querySelector('input[name="name"]').value
+
+    if (name === '') {
+        alert('You must enter the name of the item you wish to update.')
+        return
+    }
+
     const body = {category: document.querySelector('input[name="category"]').value}
     clearItemForm()
     console.log(name)
@@ -221,14 +240,27 @@ updateItemBtn.onclick = function (event) {
     .then( (res) => {
         displayItems(res.data)
     })
+    .catch(error => {
+        alert('There was an error.')
+    })
 }
 
 deleteItemBtn.onclick = function (event) {
     event.preventDefault()
     const name = document.querySelector('input[name="name"]').value
-    console.log(name)
+    
+    if (name === '') {
+        alert('You must enter the name of the item you wish to update.')
+        return
+    }
+
     axios.delete(`http://localhost:4000/api/item/${name}`)
     .then( (res) => {
         displayItems(res.data)
     })
+    .catch(error => {
+        alert('There was an error.')
+    })
 }
+
+displayNoItems()

@@ -1,0 +1,41 @@
+This assessment was to test backend integration.
+
+===
+
+By the Friday 12:30 cutoff, the code supported the following with default CSS styling:
+
+1) Get a fortune.
+
+2) Get either the first line of a novel or an FBI Most_Wanted figitive using a popup menu to select/change the option and a button to get another item.
+
+3) RPN calculator capable of performing a simple 2-value (one enter) calculation per load of the page.
+
+4) An Item tracker where each item has a Name and Category, and all interaction (Add, Update, Delete) is through the input fields. Update searches the "database" using the Name and assigned the new Category. Delete searches the "database" based on the Name and ignores the Category.
+
+===
+
+By Friday around 2:30, I discovered that some of the files I had created by the 12:30 cutoff were not in the repo, so I pushed them up.
+
+===
+
+By the end of Friday, I had made the following modifications:
+
+1) Fleshed out the RPN calculator to be able to use the full stack, and also added BackSpace and Change-Sign.
+
+2) Added custom CSS styling.
+
+===
+
+By Sunday morning, I made the following modifications:
+
+1) Fixed the RPN calculator to work properly for complex calculations.
+
+2) Fixed the RPN calculator to handle ChS properly for numbers like "0.0002".
+
+3) Fixed the RPN calculator display to have "overflow: hidden".
+
+4) Modified the Items so the Update and Delete buttons check to make sure that a name has been entered before calling the backend.
+
+5) Modified the Items so there is a "There are no items." notice when appropriate.
+
+6) Modified mt .gitignore file to have "!server/images" so that the server/images directory can be included in the repo.
