@@ -38,4 +38,4 @@ By Sunday morning, I made the following modifications:
 
 5) Modified the Items so there is a "There are no items." notice when appropriate.
 
-6) Modified mt .gitignore file to have "!server/images" so that the server/images directory can be included in the repo.
+6) Modified the .gitignore file to have "!server/images" so that the server/images directory can be included in the repo.

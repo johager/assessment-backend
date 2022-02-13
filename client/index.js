@@ -250,10 +250,11 @@ deleteItemBtn.onclick = function (event) {
     const name = document.querySelector('input[name="name"]').value
     
     if (name === '') {
-        alert('You must enter the name of the item you wish to update.')
+        alert('You must enter the name of the item you wish to delete.')
         return
     }
-
+    
+    clearItemForm()
     axios.delete(`http://localhost:4000/api/item/${name}`)
     .then( (res) => {
         displayItems(res.data)
